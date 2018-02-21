@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">WebQuests sobre #{webQuestBean.key}</ui:define>
+
+    <ui:define name="name">WebQuests sobre #{webQuestBean.key}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+
+            <p:messages id="msgs" showDetail="true"/>
+
+            <center>
+
+                <p:dataTable value="#{webQuestBean.listWebQuestsByKey}" var="webquest" id="table" style="width: 100%;"
+                             emptyMessage="Nenhuma webquest encontrada para #{webQuestBean.key}" >
+
+                    <f:facet name="header">  
+                        <h:outputText value="Lista de WebQuests"/>
+                    </f:facet> 
+
+                    <p:column headerText="Título">  
+                        <h:outputText style="text-align: justify; white-space: normal !important;" 
+                                      value="#{webquest.title}" />  
+                    </p:column>  
+
+                    <p:column headerText="Objetivos de Aprendizagem">  
+                        <h:outputText style="text-align: justify; white-space: normal !important;"
+                                      value="#{webquest.learningObjectives}" />  
+                    </p:column> 
+
+                    <p:column style="text-align: center;" headerText="Executar">
+                        <h:commandButton title="Executar" image="/resources/imagens/html_64.png"
+                                         action="#{webQuestBean.viewWebQuest}">
+                            <f:param value="#{webquest.id}" name="id" />
+                        </h:commandButton>
+
+                    </p:column>
+
+                    <f:facet name="footer">  
+                        <p:row>
+                            <p:column  colspan="3" style="text-align: right">  
+                                <br/> 
+                            </p:column>  
+                        </p:row>
+                    </f:facet>
+
+                </p:dataTable>
+            </center>
+
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Acesse o menu acima para iniciar!<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+            <h:form>  
+
+                <p:tagCloud style="width: 225px; background-color: #E8E8E8; border-style: hidden !important;" model="#{webQuestBean.model}">  
+                    <p:ajax event="select" listener="#{webQuestBean.onSelect}" />  
+                </p:tagCloud>  
+
+            </h:form>  
+            
+        </div>
+
+    </ui:define>
+
+</ui:composition>

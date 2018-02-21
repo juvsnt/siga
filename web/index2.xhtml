@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">Página Inicial</ui:define>
+
+    <ui:define name="name">Página Inicial</ui:define>
+
+    <ui:define name="content">
+
+        <br/> 
+        <h:form id="form">
+
+            <h4>Seja bem vindo ao Sistema Gerenciador de Aprendizagem.</h4>
+            <br/>
+
+            É altamente recomendado conhecer as intruções de fazer uso da ferramenta.
+            <br/>
+            <br/>
+
+            <center>
+
+                <p:messages showDetail="true" />
+
+                <object width="640" height="480">
+                    <param name="movie" value="//www.youtube.com/v/V_JzgzuW_Tk?hl=pt_BR&amp;version=3&amp;rel=0"></param>
+                    <param name="allowFullScreen" value="true"></param>
+                    <param name="allowscriptaccess" value="always"></param>
+                    <embed src="//www.youtube.com/v/V_JzgzuW_Tk?hl=pt_BR&amp;version=3&amp;rel=0" type="application/x-shockwave-flash" width="640" height="480" allowscriptaccess="always" allowfullscreen="true"></embed>
+                </object>
+                <!--<p:media value="http://www.youtube.com/v/KZnUr8lcqjo" width="420" height="315" player="flash" />-->  
+
+                <br/>
+
+                <table border="0">
+                    <thead>
+                        <tr>
+                            <th>Executar em HTML ou LD</th>
+                            <th>Tutorial do editor WebQuest-LD</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p:commandLink title="Executar em HTML ou LD" action="index1?faces-redirect=true">
+                                    <p:graphicImage style="border-style: hidden !important; width: 200px;" 
+                                                    value="/resources/imagens/run.jpg"/>
+                                </p:commandLink>
+                            </td>
+                            <td>
+                                <p:commandLink title="Tutorial do editor WebQuest-LD" action="index?faces-redirect=true">
+                                    <p:graphicImage style="border-style: hidden !important; width: 200px;" 
+                                                    value="/resources/imagens/tuto.jpg"/>
+                                </p:commandLink>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </center>
+
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Utilize o menu acima para iniciar!<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+        </div>
+    </ui:define>
+</ui:composition>

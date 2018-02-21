@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./templates/#{webQuestBean.webQuest.template}/index.xhtml">
+
+    <ui:define name="title">Créditos</ui:define>
+
+    <ui:define name="name">#{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="menu">
+
+        <li>
+            <a href="cover.xhtml">Capa</a>
+        </li>
+        <li>
+            <a href="introduction.xhtml">Introdução</a>
+        </li>
+        <li>
+            <a href="task.xhtml">Tarefa</a>
+        </li>
+        <li>
+            <a href="process.xhtml">Processo</a>
+        </li>
+        <li>
+            <a href="evaluation.xhtml">Avaliação</a>
+        </li>
+        <li>
+            <a href="conclusion.xhtml">Conclusão</a>
+        </li>
+        <li>
+            <a href="#" class="active">Créditos</a>
+        </li>
+        <br/>
+
+    </ui:define>
+
+    <ui:define name="content">
+<br/>
+        <h:outputText escape="false" value="#{webQuestBean.webQuest.credits}"/>
+
+        <br/>
+        
+    </ui:define>
+
+</ui:composition>
+

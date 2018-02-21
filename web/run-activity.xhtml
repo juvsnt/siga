@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/unemat3/index.xhtml">
+
+    <ui:define name="title">Run - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="name">Run - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" >
+
+            <p:commandLink ajax="true" title="retornar para atividades" action="#{partyBean.runPhase}">
+                <h:outputText value="Retornar para atividades"/>
+                <f:param value="#{partyBean.phase.id}" name="id" />
+            </p:commandLink>
+
+            <p:spacer height="20px" style="border-style: hidden !important;" />
+
+            <p:messages id="msgs" showDetail="true"/>
+
+            <center>
+
+                <table border="0" style="width:100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p:panel header="Atividade - #{partyBean.activity.activity.title}" >
+                                    
+                                    <table border="1" style="width:100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align: right">
+                                                    <h:commandButton title="Salvar e continuar depois" image="/resources/imagens/save_64.png"
+                                                                     action="view-team?faces-redirect=true"/>
+                                                </td>
+                                                <td style="text-align: right; width: 60px;">
+                                                    <h:commandButton title="Concluir" image="/resources/imagens/check_64.png"
+                                                                     action="#{partyBean.completeActivity}">
+                                                        <f:param value="#{partyBean.phase.id}" name="id" />
+                                                        </h:commandButton>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p:tabView effectDuration="normal" style="width: 100%;">  
+
+                                        <p:tab title="Descrição">
+                                            <h:panelGrid cellpadding="10">  
+                                                <center>
+                                                    <h:outputText escape="false" value="#{partyBean.activity.activity.activityDescription}"/>
+                                                </center>
+                                            </h:panelGrid>  
+                                        </p:tab>  
+
+                                        <p:tab title="Objetivos">  
+                                            <h:panelGrid cellpadding="10">  
+                                                <center>
+                                                    <h:outputText escape="false" value="#{partyBean.activity.activity.learningObjectives}"/>
+                                                </center>
+                                            </h:panelGrid>  
+                                        </p:tab>  
+
+                                        <p:tab title="Pré-Requisitos">
+                                            <h:panelGrid cellpadding="10">  
+                                                <center>
+                                                    <h:outputText escape="false" value="#{partyBean.activity.activity.prerequisites}"/>
+                                                </center>
+                                            </h:panelGrid>  
+                                        </p:tab>
+
+                                    </p:tabView> 
+
+                                </p:panel>
+
+                            </td>
+                            <td style="text-align: left; width: 300px;">
+                                <p:panel header="Ambiente/Recursos">
+
+                                    <p:dataList value="#{partyBean.activity.activity.resources}" var="res" type="unordered">
+                                        <a href="#{res.href}" target="_blank">#{res.title}</a>                                        
+                                    </p:dataList>
+
+                                </p:panel>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </center>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

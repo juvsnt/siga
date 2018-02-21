@@ -1,0 +1,195 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">#{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="name">WebQuests - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+            <br/>
+            <!--            buttons   -->
+            <p:commandButton ajax="false" value="Capa" action="edit-cover?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Introdução" action="edit-introduction?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Tarefa" action="edit-task-phases?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Processo" action="edit-process?faces-redirect=true"/>
+            <p:commandButton ajax="false" disabled="true" value="Avaliação"/>
+            <p:commandButton ajax="false" value="Conclusão" action="edit-conclusion?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Créditos" action="edit-credits?faces-redirect=true"/>
+
+            
+            <h:commandLink title="HTML" action="#{webQuestBean.viewWebQuest}"
+                           actionListener="#{phaseBean.first}" target="_blank">
+                <p:graphicImage style="border-style: hidden !important;"
+                                value="/resources/imagens/html_64.png"/>
+                <f:param value="#{webQuestBean.webQuest.id}" name="id" />
+            </h:commandLink>
+
+
+            <p:commandLink style="margin-top: -80px;" title="IMSLD" onclick="runDlg.show();"
+                           action="#{xmlBean.prepareEdit}"
+                           actionListener="#{webQuestBean.prepareMem}">
+                <p:graphicImage style="border-style: hidden !important;"
+                                value="/resources/imagens/LD_ZIP_64.png"/>
+                <f:param value="#{webQuestBean.webQuest.id}" name="id" />
+            </p:commandLink>
+            
+            
+            <p:separator />
+
+            <!--            msgs   -->
+
+            <div id="mens" class="ui-messages ui-widget">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-info-summary">Avaliação</span> 
+                            <span class="ui-messages-info-detail">Descreva os critérios para cada resultado.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <p:messages id="msgs" showDetail="true"/>
+            </div>
+
+            <p:panel>
+
+                <f:facet name="header">
+                    <span style="float: left">Avaliação</span>
+                </f:facet>
+
+                <center>
+                    
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <h:commandButton title="Salvar Qualificador" image="/resources/imagens/save_64.png"
+                                                     action="#{qualifyingBean.updateQualifying}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h:panelGrid id="cover" style="width: 80%; margin-top: 20px;" columns="2">
+
+                        <h:outputText style="font-weight: bold; float: bottom;" value="Título: *"/>
+                        <p:inputText style="width: 100%;" size="40" value="#{qualifyingBean.qualifying.title}"/>
+
+                        <h:outputText style="font-weight: bold; float: bottom;" value="Resultado Ruím: *"/>
+                        <p:inputTextarea style="width: 99%;" value="#{qualifyingBean.qualifying.outcomes.get(0).description}"/>
+
+                        <h:outputText style="font-weight: bold; float: bottom;" value="Resultado Bom: *"/>
+                        <p:inputTextarea style="width: 99%;" value="#{qualifyingBean.qualifying.outcomes.get(1).description}"/>
+
+                        <h:outputText style="font-weight: bold; float: bottom;" value="Resultado Muito Bom: *"/>
+                        <p:inputTextarea style="width: 99%;" value="#{qualifyingBean.qualifying.outcomes.get(2).description}"/>
+
+                        <h:outputText style="font-weight: bold; float: bottom;" value="Resultado Ótimo: *"/>
+                        <p:inputTextarea style="width: 99%;" value="#{qualifyingBean.qualifying.outcomes.get(3).description}"/>
+
+                    </h:panelGrid>
+
+                    <br/>
+
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr><td style="text-align: right">
+                                    <h:commandButton title="Voltar" image="/resources/imagens/cancel_64.png"
+                                                     immediate="true" action="edit-evaluation-qualifiers?faces-redirect=true"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </center>
+            </p:panel>
+
+        </h:form>
+<h:form rendered="#{userBean.learner}">
+            <script type="text/javascript">
+                location.href = "edit-teams.xhtml";
+            </script>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Olá #{userBean.user.name}!
+                    </p>
+                    <br/>
+                    <p>
+                        Descrever/Editar qualificador.
+                    </p>
+                    <br/>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+            <h:form>  
+
+                <p:tagCloud style="width: 225px; background-color: #E8E8E8; border-style: hidden !important;" model="#{webQuestBean.model}">  
+                    <p:ajax event="select" listener="#{webQuestBean.onSelect}" />  
+                </p:tagCloud>  
+
+            </h:form>  
+
+        </div>
+        
+         <!--dlg run-->
+        <p:dialog widgetVar="runDlg" resizable="false" header="Executar LD" 
+                  width="400" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Download"
+                                               onclick="runDlg.hide();"
+                                               actionListener="#{xmlBean.export}">
+                                    <p:fileDownload value="#{xmlBean.downloadContentProperty}" />  
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/download_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Rodar"
+                                               onclick="runDlg.hide();"
+                                               action="#{webQuestBean.runWebQuest}" target="_blank">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/run_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+                    </h:panelGrid>
+
+                </center>
+            </h:form>
+        </p:dialog>
+        
+    </ui:define>
+
+</ui:composition>

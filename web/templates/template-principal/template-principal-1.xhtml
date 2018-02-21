@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!-- Created by Artisteer v4.1.0.59782 -->
+    <f:view contentType="text/html; charset=UTF-8">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <!--Título da página-->
+
+            <title>WebQuest - <ui:insert name="title">Title</ui:insert></title>
+
+            <!--Fim Título da Página-->
+            <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
+
+            <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+            <link type="text/css" rel="stylesheet" href="/editor/faces/templates/template-principal/style-template-principal.css" media="screen"/>
+            <!--[if lte IE 7]><link rel="stylesheet" href="style.ie7.css" media="screen" /><![endif]-->
+            <link rel="stylesheet" type="text/css" href="/editor/faces/templates/template-principal/style-template-principal.responsive.css" media="all"/>
+
+
+            <script src="template-principal/jquery-template-principal.js"></script>
+            <script src="template-principal/script-template-principal.js"></script>
+            <script src="template-principal/script-template-principal.responsive.js"></script>
+
+
+
+        </h:head>
+        <h:body>
+            <div id="art-main">
+                <div id="art-hmenu-bg" class="art-bar art-nav clearfix">
+                </div>
+                <header class="art-header clearfix">
+
+
+                    <div class="art-shapes">
+                        <div class="art-object1914505848" data-left="92.03%"></div>
+                        <div class="art-object1776966796" data-left="95.47%"></div>
+
+                    </div>
+                    <h1 class="art-headline" data-left="12.18%">
+                        <a href="../../">S I G A</a>
+                    </h1>
+                    <h2 class="art-slogan" data-left="12.18%">Visualizador de WebQuests/IMSLD</h2>
+
+                </header>
+                <div class="art-sheet clearfix">
+                    <nav class="art-nav clearfix">
+                        <div class="art-nav-inner">
+                            <ul class="art-hmenu">
+
+                                <ui:insert name="menu">
+
+                                    <li>
+                                        <a href="index.xhtml">Início</a>
+                                    </li>
+                                    <li>
+                                        <a href="personal-data.xhtml">Dados Pessoais</a>
+                                    </li>
+                                    <li>
+                                        <a href="edit-teams.xhtml">Turmas</a>
+                                    </li>
+                                    <li>
+                                        <a href="logout.xhtml">Logout</a>
+                                    </li>
+
+                                </ui:insert>
+
+                            </ul> 
+                        </div>
+                    </nav>
+
+                    <div class="art-layout-wrapper clearfix">
+                        <div class="art-content-layout">
+                            <div class="art-content-layout-row">
+
+                                <div class="art-layout-cell art-content clearfix">
+                                    <article class="art-post art-article">
+
+                                        <h2 class="art-postheader">
+                                            <ui:insert name="name">Criador de WebQuest</ui:insert>
+                                        </h2>
+
+                                        <div class="art-postcontent art-postcontent-0 clearfix">
+                                            <ui:insert name="content">Conteúdo</ui:insert>
+                                        </div>
+
+                                    </article>
+
+                                </div>
+
+                                <ui:insert name="sidebar"></ui:insert>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="art-footer clearfix">
+                        <a title="RSS" class="art-rss-tag-icon" style="position: absolute; bottom: 15px; left: 6px; line-height: 32px;" href="#"></a><div style="position:relative;padding-left:10px;padding-right:10px"></div>
+                    </footer>
+
+                </div>
+            </div>
+<br/>
+
+        </h:body>
+    </f:view>
+</html>
+
+
+

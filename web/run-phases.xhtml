@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/unemat3/index.xhtml">
+
+    <ui:define name="title">Run - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="name">Run - #{webQuestBean.webQuest.title}</ui:define>
+    
+    <ui:define name="content">
+
+        <h:form id="form" >
+
+            <p:commandLink ajax="true" title="retornar para atores" action="#{webQuestBean.runWebQuest}">
+                <h:outputText value="Retornar para atores"/>
+                <f:param value="#{webQuestBean.webQuest.id}" name="id" />
+            </p:commandLink>
+
+            <p:spacer height="20px" style="border-style: hidden !important;" />
+
+            <p:messages id="msgs" showDetail="true"/>
+
+            <center>
+
+                <p:dataTable value="#{partyBean.partyPhases}" var="partyPhase" id="table"
+                             emptyMessage="Nenhuma fase encontrada" >
+
+                    <f:facet name="header">  
+                        <h:outputText value="Lista de fases"/>
+                    </f:facet> 
+
+                    <p:column headerText="Título">  
+                        <h:outputText value="#{partyPhase.phase.title}" />  
+                    </p:column>  
+
+                    <p:column style="text-align: left; white-space: normal !important;" 
+                              headerText="Descrição">  
+                        <h:outputText value="#{partyPhase.phase.descriprion}" />  
+                    </p:column> 
+
+                    <p:column headerText="Rodar" style="text-align: center;">
+                        <p:commandLink rendered="#{!partyPhase.complete}" title="Rodar fase" action="#{partyBean.runPhase}">
+                            <p:graphicImage style="border-style: hidden !important; text-align: center;"
+                                            value="/resources/imagens/run_64.png"/>
+                            <f:param value="#{partyPhase.id}" name="id" />
+                        </p:commandLink>
+                        <p:commandLink rendered="#{partyPhase.complete}" title="Concluida" action="#{partyBean.runPhase}">
+                            <p:graphicImage style="border-style: hidden !important; text-align: center;"
+                                            value="/resources/imagens/check_64.png"/>
+                            <f:param value="#{partyPhase.id}" name="id" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <f:facet name="footer">  
+                        <p:row>
+                            <p:column  colspan="3" style="text-align: right">  
+                                <br/> 
+                            </p:column>  
+                        </p:row>
+                    </f:facet>
+
+                </p:dataTable>
+            </center>
+
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Esta página mostra a você todas as suas WebQuests!<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!-- Created by Artisteer v4.1.0.59782 -->
+    <f:view>
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+            <!--Título da página-->
+
+            <title>WebQuest - <ui:insert name="title">Title</ui:insert></title>
+
+            <!--Fim Título da Página-->
+
+            <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
+
+            <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+            <link type="text/css" rel="stylesheet" href="/WebQuest-1.0/faces/templates/template-principal/style-template-principal.css" media="screen"/>
+            <!--[if lte IE 7]><link rel="stylesheet" href="style.ie7.css" media="screen" /><![endif]-->
+            <link rel="stylesheet" type="text/css" href="/WebQuest-1.0/faces/templates/template-principal/style-template-principal.responsive.css" media="all"/>
+
+            <script src="template-principal/jquery-template-principal.js"></script>
+            <script src="template-principal/script-template-principal.js"></script>
+            <script src="template-principal/script-template-principal.responsive.js"></script>
+
+            <style>.art-content .art-postcontent-0 .layout-item-0 { padding-right: 5px;padding-left: 5px;  }
+                .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
+                .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
+
+            </style>
+        </h:head>
+        <h:body>
+            <div id="art-main">
+                <header class="art-header clearfix">
+
+                    <div class="art-shapes">
+                        <div class="art-object1553353827" data-left="100%"></div>
+
+                    </div>
+                    <h1 class="art-headline" data-left="0%">
+                        <a href="#">SISTEMA GERENCIADOR DE APRENDIZAGEM ELETRÔNICA - WEBQUEST/IMSLD</a>
+                    </h1>
+
+                </header>
+                <nav class="art-nav clearfix">
+                    <div class="art-nav-inner">
+                        <ul class="art-hmenu">
+
+                            <ui:insert name="menu">
+                                <li>
+                                    <a href="index.xhtml">Ínicio</a>
+                                </li>
+                                <li>
+                                    <a href="personal-data.xhtml">Dados Pessoais</a>
+                                </li>
+                                <li>
+                                    <a href="webquest-manager.xhtml">WebQuests</a>
+                                </li>
+                                <li>
+                                    <a href="gallery.xhtml">Galeria de imagens</a>
+                                </li>
+                                <li>
+                                    <a href="contact.xhtml">Contato</a>
+                                </li>
+                                <li>
+                                    <a href="logout.xhtml">Logout</a>
+                                </li>
+                            </ui:insert>
+                        </ul> 
+                    </div>
+                </nav>
+                <div class="art-sheet clearfix">
+                    <div class="art-layout-wrapper clearfix">
+                        <div class="art-content-layout">
+                            <div class="art-content-layout-row">
+                                <div class="art-layout-cell art-content clearfix">
+                                    <article class="art-post art-article">
+                                        <h2 class="art-postheader">
+                                            <span class="art-postheadericon">
+                                                <ui:insert name="name">Criador de WebQuest</ui:insert>
+                                            </span>
+                                        </h2>
+
+                                        <div class="art-postcontent art-postcontent-0 clearfix">
+                                            <div class="art-content-layout">
+                                                <div class="art-content-layout-row">
+                                                    <div class="art-layout-cell layout-item-0" style="width: 100%" >
+
+                                                        <div style="padding: 0px 2% 0px 2%;">
+                                                            <p:separator />
+                                                            <br />
+                                                            
+                                                            <ui:insert name="content">Conteúdo</ui:insert>
+                                                            
+                                                        </div>
+                                                        <br />
+                                                        <br />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="art-footer clearfix">
+                    <div class="art-footer-inner">
+                        <p><a href="#">Link1</a> | <a href="#">Link2</a> | <a href="#">Link3</a></p>
+                        <p>Copyright © 2012. All Rights Reserved.</p>
+                        <p class="art-page-footer">
+                            <span id="art-footnote-links"><a href="http://www.artisteer.com/" target="_blank">Web Template</a> created with Artisteer.</span>
+                        </p>
+                    </div>
+                </footer>
+
+            </div>
+
+        </h:body>
+    </f:view>
+</html>
+

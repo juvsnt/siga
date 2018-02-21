@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">WebQuests de #{webQuestBean.staff.name}</ui:define>
+
+    <ui:define name="name">WebQuests de #{webQuestBean.staff.name}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+
+ <p:spacer height="20px" style="border-style: hidden !important;" />
+ 
+            <p:messages id="msgs" showDetail="true"/>
+            
+            <center>
+
+                <p:dataTable value="#{webQuestBean.listWebQuestsStaff}" var="webquest" id="table"
+                             emptyMessage="Nenhuma webquest encontrada" >
+
+                    <f:facet name="header">  
+                        <h:outputText value="Lista de WebQuests"/>
+                    </f:facet> 
+
+                    <p:column style="text-align: left; white-space: normal !important;" 
+                              headerText="Título">  
+                        <h:outputText value="#{webquest.title}" />  
+                    </p:column>  
+
+                    <p:column style="text-align: left; white-space: normal !important;" 
+                              headerText="Objetivos de Aprendizagem">  
+                        <h:outputText value="#{webquest.learningObjectives}" />  
+                    </p:column> 
+
+                    <p:column headerText="Copiar" style="text-align: center;">
+                        <p:commandLink title="Copiar WebQuest"
+                                       action="#{webQuestBean.copyWebQuest}">
+                            <p:graphicImage style="border-style: hidden !important;"
+                                            value="/resources/imagens/copy_64.png"/>
+                            <f:param value="#{webquest.id}" name="id" />
+                        </p:commandLink>
+                    </p:column>
+                    
+                    <f:facet name="footer">  
+                        <p:row>
+                            <p:column  colspan="3" style="text-align: right">  
+                                <br/> 
+                            </p:column>  
+                        </p:row>
+                    </f:facet>
+
+                </p:dataTable>
+            </center>
+
+        </h:form>
+        <h:form rendered="#{userBean.learner}">
+            <script type="text/javascript">
+                location.href = "edit-teams.xhtml";
+            </script>
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Esta página mostra a você todas as suas WebQuests!<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

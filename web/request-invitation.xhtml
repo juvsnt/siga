@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/template-principal.xhtml">
+
+    <ui:define name="title">Solicitar convite</ui:define>
+
+    <ui:define name="name">Solicitar convite</ui:define>
+
+    <ui:define name="menu">
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <center>
+
+                <p:messages showDetail="true"/>
+
+                <h:panelGrid id="cover" style="width: 60%;" columns="2">
+
+                    <h:outputText style="font-weight: bold;" value="Nome: *"/>
+                    <p:inputText style="width: 100%;" value="#{webQuestBean.name}"
+                                 required="true" requiredMessage="Informe o seu nome."/>
+
+                    <h:outputText style="font-weight: bold;" value="Email: *" />
+                    <p:inputText style="width: 100%;" id="email" value="#{webQuestBean.email}"
+                                 required="true" size="50" 
+                                 requiredMessage="Informe o seu email!"
+                                 validatorMessage="O email informado não é válido!" >
+                        <f:validateRegex pattern="(^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)" />
+                    </p:inputText>
+
+                    <h:outputText style="font-weight: bold;" value="Mensagem: *"/>
+                    <p:inputTextarea style="width: 98%;" value="#{webQuestBean.msg}"
+                                required="true" requiredMessage="Diga-nos quem é você. (MSG)">
+                    </p:inputTextarea>
+
+                    <p:commandButton style="float: left" ajax="false" 
+                                     value="Enviar solicitação" action="#{webQuestBean.requestInvitation}"/>
+					
+					<p:commandButton ajax="false" immediate="true"
+                                     style="float: right;" value="Cancelar" 
+                                     action="login?faces-redirect=true"/>
+                    
+                </h:panelGrid>
+
+            </center>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

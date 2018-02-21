@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">Galeria de imagens</ui:define>
+
+    <ui:define name="name">Galeria de imagens</ui:define>
+
+    <ui:define name="content">
+        
+        <h:form rendered="#{!userBean.learner}" >  
+            <p:messages id="messages" showDetail="true"/>
+
+            <p:fileUpload fileUploadListener="#{imageBean.uploadImage}" 
+                          mode="advanced" dragDropSupport="true" auto="true" 
+                          showButtons="false" label="Selecionar imagens" multiple="true" 
+                          update="messages, dataTable" sizeLimit="1000000"  />  
+            <br/>
+
+            <p:dataGrid id="dataTable" var="images" value="#{imageBean.listImages}" 
+                        paginator="true" columns="6" rows="18" 
+                        emptyMessage="Nenhuma imagem encontrada" > 
+                <f:facet name="header">  
+                    <span style="font-weight: bold">Galeria de imagens</span>
+                </f:facet> 
+
+                <p:column>
+                    <p:lightBox styleClass="imagebox">
+                        <h:outputLink value="/WebQuest_/faces/upload/#{images.name}"
+                                      title="#{images.name}">
+                            <center>
+                                <p:graphicImage value="/upload/#{images.name}" 
+                                                width="200" height="200"/>
+                            </center>
+                        </h:outputLink>
+                    </p:lightBox>
+                </p:column>
+
+            </p:dataGrid>
+
+        </h:form> 
+         <h:form rendered="#{userBean.learner}">
+            <div id="mens" class="ui-messages ui-widget">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-info-summary">Alunos</span> 
+                            <span class="ui-messages-info-detail">Você não deveria estar aqui, para visualizar as WebQuests nas quais você está inscrito acesse o menu "Turmas".</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+    
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Acesse o menu acima para iniciar!<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>Sodales eu.<a href="#"><span style="font-weight: bold;">JimJones@MyStories.com</span></a></p></div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <div>
+                        <form action="#" class="art-search" method="get" name="searchform">
+                            <input type="text" value="" name="s" />
+                            <input type="submit" value="Search" name="search" class="art-search-button" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p> 
+                        <a href="http://feeds.feedburner.com" target="_blank">
+                            <img src="images/icon-rss.png" width="16" height="16" alt=""/></a>
+                        <a href="http://feeds.feedburner.com" target="_blank">Subscribe</a>Quam nibh.<br/>
+                        <img src="images/icon-twitter.png" width="16" height="16" alt=""/>Vestibulum. <a href="http://twitter.com" target="_blank">Twitter</a><br/>
+                        <a href="http://www.facebook.com" target="_blank">
+                            <img src="images/icon-facebook.png" width="16" height="16" alt=""/></a>Maecenas. <a href="http://www.facebook.com" target="_blank">Facebook</a><br/>
+                        <a href="http://www.flickr.com">
+                            <img src="images/icon-flikr.png" width="16" height="16" alt=""/></a>Orci eget.<a href="http://www.flickr.com" target="_blank">Flickr</a>
+                    </p>
+                </div>
+            </div>
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <div>
+                        <ul>
+                            <li>
+                                <a href="#">My first blog</a>
+                            </li>
+                            <li>
+                                <a href="#">Who will prevail?</a>
+                            </li>
+                            <li>
+                                <a href="#">Stay positive!</a>
+                            </li>
+                            <li>
+                                <a href="#">Oil still going up</a>
+                            </li>
+                            <li>
+                                <a href="#">Gripes and Grins</a>
+                            </li>
+                            <li>
+                                <a href="#">2012 Olympics</a>
+                            </li>
+                            <li>
+                                <a href="#">How to SEO</a>
+                            </li>
+                            <li>
+                                <a href="#">On Global Warming</a>
+                            </li>
+                            <li>
+                                <a href="#">Can you guess?</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        <br/>
+                        In hendrerit urna.
+                        <br/>
+                        <br/>
+                        Vel quis posuere nec donec donec aliquam imperdiet sapien elit semper condimentum rhoncus dui porta sit. Nam ligula vestibulum egestas posuere enim laoreet erat nisl etiam.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+    
+</ui:composition>

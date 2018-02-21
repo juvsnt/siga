@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/unemat3/index.xhtml">
+
+    <ui:define name="title">Run - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="name">Run - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" >
+
+            <p:commandLink rendered="#{userBean.learner}" ajax="true" title="retornar para webQuests" action="#{teamBean.prepareE}">
+                <h:outputText value="Retornar para webQuests"/>
+                <f:param value="#{teamBean.team.id}" name="id" />
+            </p:commandLink>
+             <p:commandLink rendered="#{!userBean.learner}" ajax="true" title="retornar para webQuests" action="webquest-manager?faces-redirect=true">
+                <h:outputText value="Retornar para webQuests"/>
+            </p:commandLink>
+            
+            <p:spacer height="20px" style="border-style: hidden !important;" />
+            
+            <p:messages id="msgs" showDetail="true"/>
+            
+            <center>
+
+                <p:dataTable value="#{webQuestBean.listActorByWebQuest}" var="actor" id="table"
+                             emptyMessage="Nenhum ator encontrado" >
+
+                    <f:facet name="header">  
+                        <h:outputText value="Lista de atores"/>
+                    </f:facet> 
+
+                    <p:column headerText="Ator" style="text-align: center; width: 64px;">   
+                        <p:graphicImage style="border-style: hidden !important;"
+                                            value="/resources/imagens/Aluno_64.png"/>
+                    </p:column>
+
+                    <p:column headerText="Título">  
+                        <h:outputText value="#{actor.title}" />  
+                    </p:column>  
+
+                    <p:column style="text-align: left; white-space: normal !important;" 
+                              headerText="Papel">  
+                        <h:outputText value="#{actor.act}" />  
+                    </p:column> 
+
+                    <p:column headerText="Rodar" style="text-align: center;">
+                        <p:commandLink title="Rodar webQuests" action="#{partyBean.runAs}">
+                            <p:graphicImage style="border-style: hidden !important; text-align: center;"
+                                            value="/resources/imagens/run_64.png"/>
+                            <f:param value="#{actor.title}" name="title" />
+                        </p:commandLink>
+                    </p:column>
+                    
+                    <f:facet name="footer">  
+                        <p:row>
+                            <p:column  colspan="3" style="text-align: right">  
+                                <br/> 
+                            </p:column>  
+                        </p:row>
+                    </f:facet>
+
+                </p:dataTable>
+            </center>
+
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Esta página mostra a você todas as suas WebQuests!<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/template-principal.xhtml">
+
+    <ui:define name="title">Login</ui:define>
+
+    <ui:define name="menu">
+    </ui:define>
+
+    <ui:define name="name">Login</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <center>
+
+                <div id="mens" class="ui-messages ui-widget">
+                    <div class="ui-messages-info ui-corner-all">
+                        <span class="ui-messages-info-icon"></span>
+                        <ul>
+                            <li>
+                                <span class="ui-messages-info-summary">Novo cadastro</span> 
+                                <span class="ui-messages-info-detail">Você precisa receber um convite para realizar o cadastro no sistema.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p:messages showDetail="true"/>
+
+                <h:panelGrid style="width: 40%;" columns="2">
+
+                    <h:outputText style="font-weight: bold;" value="Email: *" />
+                    <p:inputText style="width: 100%;" id="email" value="#{userBean.user.email}"
+                                 required="true" requiredMessage="Informe o seu email!"
+                                 validatorMessage="O email informado não é válido!" >
+                        <f:validateRegex pattern="(^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)" />
+                    </p:inputText>
+
+                    <h:outputText style="font-weight: bold;" value="Senha: *" />
+                    <p:password style="width: 100%;" id="senha" 
+                                value="#{userBean.user.password}"/> 
+
+                    <p:commandButton value="Login" ajax="false"
+                                     action="#{userBean.login}" />
+
+                    <p:commandButton style="float: right;" value="Cadastrar novo" ajax="false"
+                                     immediate="true" action="register-user?faces-redirect=true" />
+
+                    <h:inputHidden />
+                    <p:commandLink style="float: right;" ajax="false"
+                                   value="Esqueci minha senha" action="#{userBean.sendPasswordLogin}"/>
+                    <h:inputHidden />
+                    <p:commandLink style="float: right;" value="Solicitar convite" ajax="false"
+                                 immediate="true" action="request-invitation?faces-redirect=true"/>
+
+                </h:panelGrid>
+
+            </center>
+        </h:form>
+    </ui:define>
+</ui:composition>

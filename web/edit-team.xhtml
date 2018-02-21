@@ -1,0 +1,335 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">Editar Turma</ui:define>
+
+    <ui:define name="name">Editar Turma</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+
+            <div id="mens" class="ui-messages ui-widget">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-info-summary">Editar Turma</span> 
+                            <span class="ui-messages-info-detail"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <center>
+                <p:messages id="msgs" showDetail="true"/>
+            </center>
+
+            <p:panel>
+
+                <f:facet name="header">
+                    Turma - #{teamBean.team.name}
+                </f:facet>
+
+                <center>
+
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr>
+
+                                <td style="text-align: left">
+                                    <h:outputText style="font-weight: bold;" value="Nome da turma: *"/>
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td style="text-align: right">
+                                    <p:inputTextarea value="#{teamBean.team.name}"/>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:commandButton title="Salvar nome da turma" image="/resources/imagens/save_64.png"
+                                                     actionListener="#{teamBean.updateTeam}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table border="0" style="width: 80%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <p:commandLink title="Adicionar Aluno" 
+                                                   onclick="dlgNewRole.show();">
+                                        <p:graphicImage style="border-style: hidden !important;" 
+                                                        value="/resources/imagens/add_64.png"/>
+                                    </p:commandLink>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p:tabView effectDuration="normal" style="width: 80%;">
+
+                        <p:tab title="Cadastrados">
+
+                            <p:dataTable style="width: 80%;" value="#{teamBean.listUserByTeam}" var="role"
+                                         emptyMessage="Nenhum aluno encontrado">
+
+                                <f:facet name="header">  
+                                    <h:outputText value="Alunos"/>
+                                </f:facet> 
+
+                                <p:column headerText="Título">
+                                    <p:graphicImage style="height:64px; border-style: hidden !important;" 
+                                                    title="#{role.name}" 
+                                                    value="/upload/#{role.image}"/>
+                                    <h:outputText style="text-align: justify; white-space: normal !important;"
+                                                  value="#{role.name}" />  
+                                </p:column>  
+
+                                <p:column style="text-align: center;" headerText="Status">
+                                    <p:commandLink title="Status do Aluno" action="#{partyBean.setParties}">
+                                        <p:graphicImage style="border-style: hidden !important;" 
+                                                        value="/resources/imagens/complete_task_64.png"/>
+                                        <f:param value="#{role.id}" name="id" />
+                                    </p:commandLink>
+                                </p:column>
+
+                                <p:column style="text-align: center;" headerText="Remover">
+                                    <h:commandButton title="Remover Aluno" image="/resources/imagens/delete_64.png"
+                                                     action="#{teamBean.prepareRemoveRegistered}">
+                                        <f:param value="#{role.id}" name="id" />
+                                    </h:commandButton>
+                                </p:column>
+
+                                <f:facet name="footer">  
+                                    <p:column style="text-align: right">  
+                                        <br/> 
+                                    </p:column>  
+                                </f:facet>
+
+                            </p:dataTable>
+
+                        </p:tab> 
+
+                        <p:tab title="Não cadastrados">
+
+                            <table border="0" style="width: 80%;">
+
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: right">
+                                            <h:commandButton title="Enviar convites" image="/resources/imagens/Email_64.png"
+                                                             action="#{teamBean.sendInvitation}"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p:dataTable style="width: 80%;" value="#{teamBean.listEmailsByTeam}" var="email"
+                                         emptyMessage="Nenhum email encontrado">
+
+                                <f:facet name="header">  
+                                    <h:outputText value="Emails"/>
+                                </f:facet> 
+
+
+                                <p:column rendered="#{!email.registered}" headerText="Email">
+                                    <p:graphicImage style="border-style: hidden !important;" 
+                                                    title="Email não Cadastrado" 
+                                                    value="/resources/imagens/unregistered_email_64.png"/>
+                                    <h:outputText style="text-align: justify; white-space: normal !important;"
+                                                  value="#{email.email}" />  
+                                </p:column>  
+
+                                <p:column rendered="#{!email.registered}"  style="text-align: center;" headerText="Remover">
+                                    <h:commandButton title="Remover Aluno" image="/resources/imagens/delete_64.png"
+                                                     action="#{teamBean.prepareRemoveUnregistered}">
+                                        <f:param value="#{email.id}" name="id" />
+                                    </h:commandButton>
+                                </p:column>
+
+                                <f:facet name="footer">  
+                                    <p:column style="text-align: right">  
+                                        <br/> 
+                                    </p:column>  
+                                </f:facet>
+
+                            </p:dataTable>
+
+                        </p:tab> 
+
+                    </p:tabView>
+
+                    <table border="0" style="width: 80%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <p:commandLink title="Adicionar WebQuest" 
+                                                   onclick="dlgAddWebQuest.show();">
+                                        <p:graphicImage style="border-style: hidden !important;" 
+                                                        value="/resources/imagens/add_64.png"/>
+                                    </p:commandLink>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p:dataTable style="width: 80%;" value="#{teamBean.listWebQuestsByTeam}" var="webquest"
+                                 emptyMessage="Nenhuma WebQuest cadastrada para esta turma">
+
+                        <f:facet name="header">  
+                            <h:outputText value="WebQuests"/>
+                        </f:facet> 
+
+                        <p:column headerText="Título">
+                            <p:graphicImage style="border-style: hidden !important;" title="#{webquest.template}" 
+                                            value="templates/#{webquest.template}/images/template2.png" width="64"/>
+
+                            <h:outputText style="text-align: justify; white-space: normal !important;"
+                                          value="#{webquest.title}" />  
+                        </p:column>  
+
+                        <p:column style="text-align: center;" headerText="Remover">
+                            <h:commandButton title="Remover WebQuest da turma" image="/resources/imagens/delete_64.png"
+                                             action="#{teamBean.prepareRemoveWebQuest}">
+                                <f:param value="#{webquest.id}" name="id" />
+                            </h:commandButton>
+                        </p:column>
+
+                        <f:facet name="footer">  
+                            <p:column style="text-align: right">  
+                                <br/> 
+                            </p:column>  
+                        </f:facet>
+
+                    </p:dataTable>
+
+                    <br/>
+
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <h:commandButton title="Voltar" image="/resources/imagens/cancel_64.png"
+                                                     immediate="true" action="edit-teams?faces-redirect=true"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </center>
+
+            </p:panel>
+
+        </h:form>
+
+        <h:form rendered="#{userBean.learner}">
+            <script type="text/javascript">
+                location.href = "edit-teams.xhtml";
+            </script>
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Olá #{userBean.user.name}!
+                    </p>
+                    <br/>
+                    <p>
+                        Criar novas turmas.
+                    </p>
+                    <br/>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>            
+
+        </div>
+
+        <!--dlg new Role-->
+        <p:dialog widgetVar="dlgNewRole" resizable="false" header="Novos Alunos" 
+                  width="550" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <div id="mens" class="ui-messages ui-widget">
+                        <div class="ui-messages-info ui-corner-all">
+                            <span class="ui-messages-info-icon"></span>
+                            <ul>
+                                <li>
+                                    <span class="ui-messages-info-summary">Novos Alunos</span> 
+                                    <span class="ui-messages-info-detail">Você pode adcionar vários alunos ao mesmo tempo informando os emails separados por ponto e vírgula.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+
+                        <h:outputText style="font-weight: bold" value="Emails: *"/>
+                        <p:inputText style="width: 100%;" value="#{teamBean.email}" 
+                                     required="true" requiredMessage="É necessário informar o email do aluno." />
+                        <h:inputHidden/>
+                        <p:commandButton ajax="false" value="Salvar" 
+                                         action="#{teamBean.registerRole}"
+                                         oncomplete="dlgNewRole.hide();"/>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:dialog>
+        <!--dlg task-->
+        <p:dialog widgetVar="dlgTask" resizable="false" header="Status"  dynamic="true"
+                  width="550" modal="true" appendToBody="true" closable="false">
+            <h:form prependId="false">
+
+                <p:dataList value="#{partyBean.listChecked}" var="party" type="unordered" lazy="true">
+                    <h:outputText escape="false" value="#{party}"/>
+                </p:dataList>
+
+                <p:commandButton ajax="false" value="Fechar" oncomplete="dlgTask.hide();"/>
+            </h:form>
+        </p:dialog>
+
+        <!--dlg add WebQuest-->
+        <p:dialog widgetVar="dlgAddWebQuest" resizable="false" header="Adicionar WebQuest" 
+                  width="550" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+
+                        <h:outputText style="font-weight: bold" value="WebQuests: *"/>
+                        <p:selectOneMenu  style="width: 100%;" value="#{teamBean.webQuest}" 
+                                          required="true" requiredMessage="É necesssário selecionar uma WebQuest">  
+                            <f:selectItem itemLabel="Selecione uma WebQuest" itemValue="" />  
+                            <f:selectItems value="#{teamBean.webQuests}" />
+                        </p:selectOneMenu> 
+
+                        <h:inputHidden/>
+                        <p:commandButton ajax="false" value="Salvar" 
+                                         action="#{teamBean.addWebQuest}"
+                                         oncomplete="dlgAddWebQuest.hide();"/>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

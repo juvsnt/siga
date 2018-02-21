@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/template-principal.xhtml">
+
+    <ui:define name="title">Contato</ui:define>
+
+    <ui:define name="name">Contato</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+            <center>
+
+                <h:panelGrid id="cover" style="width: 80%;" columns="2">
+<br/>
+                    Informações e/ou sugestões, enviar email para <a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a><br/>
+					<br/>
+
+                </h:panelGrid>
+                    <p:messages />
+					
+		<iframe src="https://docs.google.com/forms/d/1TlprDZrWUlrkzfTqpxTmoMuhCAKA1_Er-mmthp9-kpU/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Carregando...</iframe>
+
+            </center>
+
+        </h:form>
+
+    </ui:define><ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Se houver dúvida ao utilizar o sistema entre em contato.<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+            <!-- <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p> 
+                        <a href="http://feeds.feedburner.com" target="_blank">
+                            <img src="images/icon-rss.png" width="16" height="16" alt=""/></a>
+                        <a href="http://feeds.feedburner.com" target="_blank">Subscribe</a>Quam nibh.<br/>
+                        <img src="images/icon-twitter.png" width="16" height="16" alt=""/>Vestibulum. <a href="http://twitter.com" target="_blank">Twitter</a><br/>
+                        <a href="http://www.facebook.com" target="_blank">
+                            <img src="images/icon-facebook.png" width="16" height="16" alt=""/></a>Maecenas. <a href="http://www.facebook.com" target="_blank">Facebook</a><br/>
+                        <a href="http://www.flickr.com">
+                            <img src="images/icon-flikr.png" width="16" height="16" alt=""/></a>Orci eget.<a href="http://www.flickr.com" target="_blank">Flickr</a>
+                    </p>
+                </div>
+            </div>
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <div>
+                        <ul>
+                            <li>
+                                <a href="#">My first blog</a>
+                            </li>
+                            <li>
+                                <a href="#">Who will prevail?</a>
+                            </li>
+                            <li>
+                                <a href="#">Stay positive!</a>
+                            </li>
+                            <li>
+                                <a href="#">Oil still going up</a>
+                            </li>
+                            <li>
+                                <a href="#">Gripes and Grins</a>
+                            </li>
+                            <li>
+                                <a href="#">2012 Olympics</a>
+                            </li>
+                            <li>
+                                <a href="#">How to SEO</a>
+                            </li>
+                            <li>
+                                <a href="#">On Global Warming</a>
+                            </li>
+                            <li>
+                                <a href="#">Can you guess?</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        <br/>
+                        In hendrerit urna.
+                        <br/>
+                        <br/>
+                        Vel quis posuere nec donec donec aliquam imperdiet sapien elit semper condimentum rhoncus dui porta sit. Nam ligula vestibulum egestas posuere enim laoreet erat nisl etiam.
+                    </p>
+                </div>
+            </div> -->
+        </div>
+    </ui:define>
+    
+</ui:composition>

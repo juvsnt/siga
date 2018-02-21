@@ -1,0 +1,299 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">#{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="name">WebQuests - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+            <br/>
+            <!--            buttons   -->
+            <p:commandButton value="Capa" action="edit-cover?faces-redirect=true"/>
+            <p:commandButton value="Introdução" action="edit-introduction?faces-redirect=true"/>
+            <p:commandButton disabled="true" value="Tarefa"/>
+            <p:commandButton value="Processo" action="edit-process?faces-redirect=true"/>
+            <p:commandButton value="Avaliação" action="edit-evaluation-qualifiers?faces-redirect=true"/>
+            <p:commandButton value="Conclusão" action="edit-conclusion?faces-redirect=true"/>
+            <p:commandButton value="Créditos" action="edit-credits?faces-redirect=true"/>
+
+            
+            <h:commandLink title="HTML" action="#{webQuestBean.viewWebQuest}"
+                           actionListener="#{phaseBean.first}" target="_blank">
+                <p:graphicImage style="border-style: hidden !important;"
+                                value="/resources/imagens/html_64.png"/>
+                <f:param value="#{webQuestBean.webQuest.id}" name="id" />
+            </h:commandLink>
+
+
+            <p:commandLink style="margin-top: -80px;" title="IMSLD" onclick="runDlg.show();"
+                           action="#{xmlBean.prepareEdit}"
+                           actionListener="#{webQuestBean.prepareMem}">
+                <p:graphicImage style="border-style: hidden !important;"
+                                value="/resources/imagens/LD_ZIP_64.png"/>
+                <f:param value="#{webQuestBean.webQuest.id}" name="id" />
+            </p:commandLink>
+            
+            
+            <p:separator />
+
+            <!--            msgs   -->
+
+            <div id="mens" class="ui-messages ui-widget">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-info-summary">Fases</span> 
+                            <span class="ui-messages-info-detail">A Tarefa deve ser executada em Fases (etapas)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <p:messages id="msgs" showDetail="true"/>
+            </div>
+
+            <p:panel>
+
+                <f:facet name="header">
+                    Tarefa
+                </f:facet>
+
+                <center>
+
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr>
+                                
+                                <td style="text-align: left">
+                                    <h:outputText style="font-weight: bold;" value="Defina a Tarefa (objetivo principal da WebQuest): *"/>
+                                </td>
+                            </tr>
+                             <tr>
+                                
+                                <td style="text-align: right">
+                                    <p:inputTextarea value="#{webQuestBean.webQuest.taskTitle}"/>
+                                </td>
+                                 <td style="text-align: right">
+                                    <h:commandButton title="Salvar título da tarefa" image="/resources/imagens/save_64.png"
+                                                     actionListener="#{webQuestBean.updateWebQuest}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <table border="0" style="width: 80%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <p:commandLink title="Nova Fase" 
+                                                   onclick="dlgNewPhase.show();"
+                                                   actionListener="#{phaseBean.prepareRegisterPhase}">
+                                        <p:graphicImage style="border-style: hidden !important;" 
+                                                        value="/resources/imagens/add_64.png"/>
+                                    </p:commandLink>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p:dataTable style="width: 80%;" value="#{phaseBean.listPhases}" var="phase"
+                                 id="table" emptyMessage="Nenhuma fase encontrada">
+
+                        <f:facet name="header">  
+                            <h:outputText value="Fases"/>
+                            <h:commandButton title="Vizualizar texto de tarefa"
+                                             image="/resources/imagens/view_24.png"
+                                             action="#{webQuestBean.prepareEditTextTask}">
+                                <f:param value="#{webQuestBean.webQuest.id}" name="id"/>
+                            </h:commandButton>
+                        </f:facet> 
+
+                        <p:column headerText="Título">
+                            <p:graphicImage style="border-style: hidden !important;" 
+                                            rendered="#{!phase.completeTask}"
+                                            title="Fase incompleta" 
+                                            value="/resources/imagens/phase_incomplete_64.png"/>
+                            <p:graphicImage style="border-style: hidden !important;" 
+                                            rendered="#{phase.completeTask}"
+                                            title="Fase completa" 
+                                            value="/resources/imagens/phase_complete_64.png"/>
+                            <h:outputText style="text-align: justify; white-space: normal !important;"
+                                          value="#{phase.title}" />  
+                        </p:column>  
+
+                        <p:column style="text-align: center;" headerText="Descrição">
+                            <h:commandButton title="Editar Fase" image="/resources/imagens/edit_64.png"
+                                             action="#{phaseBean.prepareEdit}">
+                                <f:param value="#{phase.id}" name="id" />
+                                <f:param value="0" name="case" />
+                            </h:commandButton>
+                        </p:column>
+                        
+                        <p:column style="text-align: center;" headerText="Atores">
+                            <h:commandButton title="Criar Atores" image="/resources/imagens/add_actor_64.png"
+                                             action="#{phaseBean.prepareEdit}">
+                                <f:param value="#{phase.id}" name="id" />
+                                <f:param value="2" name="case" />
+                            </h:commandButton>
+                        </p:column>
+                        
+                        <p:column style="text-align: center;" headerText="Recursos">
+                            <h:commandButton title="Criar Recursos" image="/resources/imagens/add_Objeto de aprendizagem_64.png"
+                                             action="#{phaseBean.prepareEdit}">
+                                <f:param value="#{phase.id}" name="id" />
+                                <f:param value="1" name="case" />
+                            </h:commandButton>
+                        </p:column>
+
+                        <p:column style="text-align: center;" headerText="Remover">
+                            <h:commandButton title="Remover WebQuest" image="/resources/imagens/delete_64.png"
+                                             action="#{phaseBean.prepareRemove}">
+                                <f:param value="#{phase.id}" name="id" />
+                            </h:commandButton>
+                        </p:column>
+
+                        <f:facet name="footer">  
+                            <p:column style="text-align: right">  
+                                <br/> 
+                            </p:column>  
+                        </f:facet>
+
+                    </p:dataTable>
+
+                    <br/>
+
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left">
+                                    <h:commandButton title="Voltar" image="/resources/imagens/back_64.png"
+                                                     actionListener="#{webQuestBean.updateWebQuest}"
+                                                     action="edit-introduction?faces-redirect=true"/>
+                                </td>
+
+                                <td style="text-align: right">
+                                    <h:commandButton title="Avançar" image="/resources/imagens/forward_64.png"
+                                                     actionListener="#{webQuestBean.updateWebQuest}"
+                                                     action="edit-process?faces-redirect=true"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </center>
+            </p:panel>
+
+        </h:form>
+<h:form rendered="#{userBean.learner}">
+            <script type="text/javascript">
+                location.href = "edit-teams.xhtml";
+            </script>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Olá #{userBean.user.name}!
+                    </p>
+                    <br/>
+                    <p align="justify">
+                        A Tarefa é considerada como o “coração da WebQuest”. 
+                    </p>
+                    <br/>
+                    <p align="justify">
+                        Utilize os botões Adicionar e/ou Editar para especificar as Fases.  
+                    </p>
+                    <br/>
+                    <p align="justify">
+                        A partir das Fases você define os Atores e suas responsabilidades, além dos Recursos para resolver a(s) atividades(s). 
+                    </p>
+                    <br/>
+                    <p align="justify">
+                        Estas atividades serão definidas na sessão Processo (próxima). 
+                    </p>
+                    <br/>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>           
+
+        </div>
+
+        <!--dlg new phase-->
+        <p:dialog widgetVar="dlgNewPhase" resizable="false" header="Nova Fase" 
+                  width="550" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+                        <h:outputText style="font-weight: bold" value="Título: *"/>
+                        <p:inputText style="width: 100%;" value="#{phaseBean.phase.title}" 
+                                     required="true" requiredMessage="É necessário informar o título da fase." />
+                        <h:inputHidden/>
+                        <p:commandButton ajax="false" value="Salvar" 
+                                         action="#{phaseBean.registerPhase}"
+                                         oncomplete="dlgNewPhase.hide();">
+                            <f:param value="#{webQuestBean.webQuest.id}" name="id"/>
+                        </p:commandButton>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:dialog>
+
+         <!--dlg run-->
+        <p:dialog widgetVar="runDlg" resizable="false" header="Executar LD" 
+                  width="400" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Download"
+                                               onclick="runDlg.hide();"
+                                               actionListener="#{xmlBean.export}">
+                                    <p:fileDownload value="#{xmlBean.downloadContentProperty}" />  
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/download_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Rodar"
+                                               onclick="runDlg.hide();"
+                                               action="#{webQuestBean.runWebQuest}" target="_blank">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/run_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+                    </h:panelGrid>
+
+                </center>
+            </h:form>
+        </p:dialog>
+        
+    </ui:define>
+
+</ui:composition>

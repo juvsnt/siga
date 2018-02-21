@@ -1,0 +1,294 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">Gerenciar WebQuests</ui:define>
+
+    <ui:define name="name">Gerenciar WebQuests</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+
+            <p:messages id="msgs" showDetail="true"/>
+
+            <center>
+                <table border="0" style="width: 100%;">
+
+                    <tbody>
+                        <tr>
+                            <td style="text-align: right">
+                                <!--<h:commandButton title="Criar WebQuest"
+                                                 image="/resources/imagens/add_64.png" 
+                                                 action=""/>-->
+                                <h:commandButton title="Criar WebQuest Padrão"
+                                                 image="/resources/imagens/add_fast_64.png" 
+                                                 action="#{webQuestBean.prepareRegisterWebQuestFast}"/>
+                                <h:commandButton title="Importar WebQuest-LD"
+                                                 image="/resources/imagens/import_64.png" 
+                                                 action="staff-list?faces-redirect=true"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <p:dataTable value="#{webQuestBean.listWebQuests}" var="webquest" id="table"
+                             emptyMessage="Nenhuma webquest encontrada" >
+
+                    <f:facet name="header">  
+                        <h:outputText value="Lista de WebQuests"/>
+                    </f:facet> 
+
+                    <p:column style="text-align: left; white-space: normal !important;" 
+                              headerText="Título">  
+                        <h:outputText value="#{webquest.title}" />  
+                    </p:column>  
+
+                    <p:column style="text-align: left; white-space: normal !important;" 
+                              headerText="Objetivos de Aprendizagem">  
+                        <h:outputText value="#{webquest.learningObjectives}" />  
+                    </p:column> 
+
+                    <p:column style="text-align: center;" headerText="Editar">
+                        <p:commandLink title="Editar WebQuest"
+                                       action="#{webQuestBean.prepareEdit}">
+                            <p:graphicImage style="border-style: hidden !important;"
+                                            value="/resources/imagens/edit_64.png"/>
+                            <f:param value="#{webquest.id}" name="id" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column style="text-align: center;" headerText="Remover">
+                        <p:commandLink title="Remover WebQuest"
+                                       onclick="removeDlg.show();"
+                                       actionListener="#{webQuestBean.prepareRemove}">
+                            <p:graphicImage style="border-style: hidden !important;"
+                                            value="/resources/imagens/delete_64.png"/>
+                            <f:param value="#{webquest.id}" name="id" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column style="text-align: center;" headerText="Modelo">
+
+                        <p:commandLink title="Alterar Modelo"
+                                       onclick="templatesDlg.show();">
+                            <p:graphicImage value="templates/#{webquest.template}/images/template2.png" width="64"/>
+                        </p:commandLink>
+
+                    </p:column>
+                    <p:column style="text-align: center;" headerText="Executar">
+
+                        <p:commandLink title="HTML"
+                                       action="#{webQuestBean.viewWebQuest}"
+                                       actionListener="#{phaseBean.first}">
+                            <p:graphicImage style="border-style: hidden !important;"
+                                            value="/resources/imagens/html_64.png"/>
+                            <f:param value="#{webquest.id}" name="id" />
+                        </p:commandLink>
+
+ 
+                        <p:commandLink style="margin-top: -80px;" title="IMSLD" onclick="runDlg.show();"
+                                       action="#{xmlBean.prepareEdit}"
+                                       actionListener="#{webQuestBean.prepareMem}">
+                            <p:graphicImage style="border-style: hidden !important;"
+                                            value="/resources/imagens/LD_ZIP_64.png"/>
+                            <f:param value="#{webquest.id}" name="id" />
+                        </p:commandLink>
+                        
+
+                    </p:column>
+                    <p:column rendered="false"  headerText="Status">
+                        <p:commandLink title="Publicar WebQuest"
+                                       onclick="publishDlg.show();"
+                                       actionListener="#{webQuestBean.prepareEdit}">
+                            <p:graphicImage style="border-style: hidden !important;"
+                                            rendered="#{webquest.published}"
+                                            value="/resources/imagens/webQuest_published_64.png"/>
+                            <p:graphicImage style="border-style: hidden !important;"
+                                            rendered="#{!webquest.published}"
+                                            value="/resources/imagens/webQuest_unpublished_64.png"/>
+                            <f:param value="#{webquest.id}" name="id" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <f:facet name="footer">  
+                        <p:row>
+                            <p:column  colspan="3" style="text-align: right">  
+                                <br/> 
+                            </p:column>  
+                        </p:row>
+                    </f:facet>
+
+                </p:dataTable>
+            </center>
+
+        </h:form>
+        <h:form rendered="#{userBean.learner}">
+            <script type="text/javascript">
+                location.href = "edit-teams.xhtml";
+            </script>
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Esta página mostra a você todas as suas WebQuests!<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+
+        </div>
+
+        <!--dlg template-->
+        <p:dialog header="WebQuest - Seleção de Templates"
+                  widgetVar="templatesDlg" resizable="false" modal="true" width="500"
+                  appendToBody="true">
+            <h:form prependId="false">
+                <p:dataGrid var="template" value="#{templateBean.listTemplates}"  
+                            paginator="true" rows="2"  
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  > 
+                    <f:facet name="header">  
+                        Lista de Templates
+                    </f:facet> 
+
+                    <p:column>
+                        <center>
+                            <h:outputText value="#{template.name}"/><br/>
+                            <h:commandLink immediate="true" actionListener="#{webQuestBean.updateWebQuestTemplate}"
+                                           onclick="templatesDlg.hide()">
+                                <p:graphicImage value="templates/#{template.name}/images/template_preview.png" 
+                                                width="200" height="150"/>
+                                <f:param value="#{template.name}" name="name" />
+                            </h:commandLink><br/>
+                        </center>
+                    </p:column>
+
+                </p:dataGrid>
+
+            </h:form>
+        </p:dialog>
+
+        <!--dlg removeDlg-->
+        <p:dialog widgetVar="removeDlg" resizable="false" header="Remover WebQuest" 
+                  width="400" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Sim"
+                                               onclick="removeDlg.hide();"
+                                               actionListener="#{webQuestBean.removeWebQuest}">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/check_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Não"
+                                               onclick="removeDlg.hide();">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/delete_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+                    </h:panelGrid>
+
+                </center>
+            </h:form>
+        </p:dialog>
+
+        <!--dlg publush-->
+        <p:dialog widgetVar="publishDlg" resizable="false" header="Publicar WebQuest" 
+                  width="400" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Publicar"
+                                               onclick="publishDlg.hide();"
+                                               actionListener="#{webQuestBean.publish}">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/webQuest_published_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Não Publicar"
+                                               onclick="publishDlg.hide();"
+                                               actionListener="#{webQuestBean.unpublish}">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/webQuest_unpublished_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+                    </h:panelGrid>
+
+                </center>
+            </h:form>
+        </p:dialog>
+        
+         <!--dlg run-->
+        <p:dialog widgetVar="runDlg" resizable="false" header="Executar LD" 
+                  width="400" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Download"
+                                               onclick="runDlg.hide();"
+                                               actionListener="#{xmlBean.export}">
+                                     <p:fileDownload value="#{xmlBean.downloadContentProperty}" />  
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/download_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+
+                        <p:column style="text-align: center">
+                            <center>
+                                <h:commandLink title="Rodar"
+                                               onclick="runDlg.hide();"
+                                                action="#{webQuestBean.runWebQuest}">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/run_64.png"/>
+                                </h:commandLink>
+                            </center>
+                        </p:column>
+                    </h:panelGrid>
+
+                </center>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

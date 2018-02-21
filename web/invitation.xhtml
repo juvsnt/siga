@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">Enviar Convite</ui:define>
+
+    <ui:define name="name">Enviar Convite</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+
+            <div id="mens" class="ui-messages ui-widget">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-info-summary">Enviar convite: </span> 
+                            <span class="ui-messages-info-detail">Aqui você pode convidar um professor para utilizar o Editor de WebQuest</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <center>
+                <p:messages id="msgs" showDetail="true"/>
+            </center>
+
+            <p:panel>
+
+                <f:facet name="header">
+                    Convite
+                </f:facet>
+
+                <center>
+
+                    <table border="0" style="width: 800px;">
+
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <h:commandButton title="Enviar convite" image="/resources/imagens/Email_64.png"
+                                                     action="#{userBean.sendInvitation}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h:panelGrid id="cover" style="width: 800px; margin-top: 20px;" columns="2" cellpadding="3">
+
+                        <h:outputText style="width: 100px; font-weight: bold;" value="Para: *"/>
+                        <p:inputText value="#{userBean.to}" id="to" required="true"  validatorMessage="#{userBean.to}   não é um endereço de email válido">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
+                        </p:inputText>
+                        
+                        <h:outputText style="font-weight: bold;" value="Mensagem:  "/>
+                        <p:editor style="margin-top: 20px;" id="edit" value="#{userBean.message}" width="700"/>
+
+                    </h:panelGrid>
+
+                    <br/>
+
+                </center>
+
+            </p:panel>
+
+        </h:form>
+ <h:form rendered="#{userBean.learner}">
+            <div id="mens" class="ui-messages ui-widget">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-info-summary">Alunos</span> 
+                            <span class="ui-messages-info-detail">Você não deveria estar aqui, para visualizar as WebQuests nas quais você está inscrito acesse o menu "Turmas".</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Seja bem-vindo, #{userBean.user.name}!<br/>
+                        Envie um convite personalizado para um colega de trabalho/profissão<br/>
+                        <br/>
+                    </p>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>
+             
+
+        </div>
+    </ui:define>
+
+</ui:composition>

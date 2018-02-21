@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./templates/#{webQuestBean.webQuest.template}/index.xhtml">
+
+    <ui:define name="title">Processo</ui:define>
+
+    <ui:define name="name">#{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="menu">
+
+        <li>
+            <a href="cover.xhtml">Capa</a>
+        </li>
+        <li>
+            <a href="introduction.xhtml">Introdução</a>
+        </li>
+        <li>
+            <a href="task.xhtml">Tarefa</a>
+        </li>
+        <li>
+            <a href="#">Processo</a>
+
+            <ul class="active">
+                <f:view>
+                    <h:form>
+                        <h:dataTable value="#{phaseBean.listPhases}" var="item" style="border-style: hidden !important;">
+                            <li  class="active">
+                                <h:column>
+                                    <p:commandLink value="#{item.title}" action="#{phaseBean.selectPhase}">
+                                        <f:param value="#{item.id}" name="id" />
+                                    </p:commandLink>
+                                </h:column>
+                            </li>
+                        </h:dataTable>
+                    </h:form>
+                </f:view>
+            </ul>
+        </li>
+        <li>
+            <a href="evaluation.xhtml">Avaliação</a>
+        </li>
+        <li>
+            <a href="conclusion.xhtml">Conclusão</a>
+        </li>
+        <li>
+            <a href="credits.xhtml">Créditos</a>
+        </li>
+        <br/>
+
+    </ui:define>
+
+    <ui:define name="content">
+        Na #{phaseBean.phase.title} vocë deverá realizar #{phaseBean.phase.activityies.size()} atividade(s), descrita(s) abaixo:
+        <br/>
+        <br/>
+        <f:view>
+            <h:form>
+
+                <h:dataTable value="#{activityBean.listActivities}" var="activity" style="border-style: hidden !important;">
+                    <h:column>
+                        <b>  <h:outputText value="#{activity.title}"/></b>
+
+                        <br/>
+                        <br/>
+
+                        <b>  <h:outputText value="Papéis:"/></b>
+
+                        <br/>
+
+                        <h:dataTable value="#{activity.actors}" var="actor" style="border-style: hidden !important;">
+                            <h:column>
+                                #{actor.title}: 
+                                #{actor.act}
+                            </h:column>
+                        </h:dataTable>
+
+                        <br/>
+
+                        <b> Pré-requisitos: </b>
+                        #{activity.prerequisites}
+
+                        <br/>
+                        <br/>
+
+                        <b> Objetivos: </b>
+                        #{activity.learningObjectives}
+
+                        <br/>
+                        <br/>
+
+                        <b> Recursos: </b>
+                        <br/>
+
+                        <h:dataTable value="#{activity.resources}" var="rec" style="border-style: hidden !important;">
+                            <h:column>
+                                <a href="#{rec.href}">#{rec.title}</a>
+                            </h:column>
+                        </h:dataTable>
+                        <br/>
+
+                    </h:column>
+
+                </h:dataTable>
+            </h:form>
+        </f:view>
+
+        <br/>
+
+    </ui:define>
+
+</ui:composition>
+
+

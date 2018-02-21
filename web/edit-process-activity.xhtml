@@ -1,0 +1,331 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template-principal/#{userBean.template()}.xhtml">
+
+    <ui:define name="title">#{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="name">WebQuests - #{webQuestBean.webQuest.title}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" rendered="#{!userBean.learner}" >
+            <br/>
+            <!--            buttons   -->
+            <p:commandButton ajax="false" value="Capa" action="edit-cover?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Introdução" action="edit-introduction?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Tarefa" action="edit-task-phases?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Processo" action="edit-process?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Avaliação" action="edit-evaluation-qualifiers?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Conclusão" action="edit-conclusion?faces-redirect=true"/>
+            <p:commandButton ajax="false" value="Créditos" action="edit-credits?faces-redirect=true"/>
+
+            
+            <h:commandLink title="HTML" action="#{webQuestBean.viewWebQuest}"
+                           actionListener="#{phaseBean.first}" target="_blank">
+                <p:graphicImage style="border-style: hidden !important;"
+                                value="/resources/imagens/html_64.png"/>
+                <f:param value="#{webQuestBean.webQuest.id}" name="id" />
+            </h:commandLink>
+
+
+            <h:commandLink style="margin-top: -80px;" title="IMSLD" onclick="runDlg.show();"
+                           action="#{xmlBean.prepareEdit}"
+                           actionListener="#{webQuestBean.prepareMem}">
+                <p:graphicImage style="border-style: hidden !important;"
+                                value="/resources/imagens/LD_ZIP_64.png"/>
+                <f:param value="#{webQuestBean.webQuest.id}" name="id" />
+            </h:commandLink>
+            
+            
+           <p:separator />
+
+            <!--            msgs   -->
+
+            <div id="mens" class="ui-messages ui-widget">
+                <div class="ui-messages-info ui-corner-all">
+                    <span class="ui-messages-info-icon"></span>
+                    <ul>
+                        <li>
+                            <span class="ui-messages-info-summary">Atividade</span> 
+                            <span class="ui-messages-info-detail"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <p:messages id="msgs" showDetail="true"/>
+            </div>
+
+            <p:panel>
+
+                <f:facet name="header">
+                    <span style="float: left">Atividade</span>
+                </f:facet>
+                <center>
+
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <h:commandButton title="Salvar Atividade" image="/resources/imagens/save_64.png"
+                                                     action="#{phaseBean.isCompleteProcess}"
+                                                     actionListener="#{activityBean.updateActivity}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h:panelGrid style="width: 80%; margin-top: 20px;" columns="2">
+
+                        <h:outputText style="font-weight: bold;" value="Título: *"/>
+                        <p:inputText style="width: 100%;" size="40" value="#{activityBean.activity.title}" required="true"
+                                     requiredMessage="Campo Título é obrigatório"/>
+                    </h:panelGrid>
+
+                    <br/>
+
+                    <p:tabView effectDuration="normal" style="width: 80%;">  
+
+                        <p:tab title="Descrição">
+                            <h:panelGrid cellpadding="10">  
+                                <center>
+                                    <p:editor value="#{activityBean.activity.activityDescription}" width="650"/>
+                                </center>
+                            </h:panelGrid>  
+                        </p:tab>  
+
+                        <p:tab title="Objetivos">  
+                            <h:panelGrid cellpadding="10">  
+                                <center>
+                                    <p:editor value="#{activityBean.activity.learningObjectives}" width="650"/>
+                                </center>
+                            </h:panelGrid>  
+                        </p:tab>  
+
+                        <p:tab title="Pré-Requisitos">
+                            <h:panelGrid cellpadding="10">  
+                                <center>
+                                    <p:editor value="#{activityBean.activity.prerequisites}" width="650"/>
+                                </center>
+                            </h:panelGrid>  
+                        </p:tab>
+
+                        <p:tab title="Atores">
+
+                            <table border="0" style="width: 80%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: right">
+                                            <p:commandLink title="Adcionar Ator"
+                                                           onclick="dlgAddActor.show();"
+                                                           actionListener="#{actorBean.prepareAddActor}">
+                                                <p:graphicImage style="border-style: hidden !important;"
+                                                                value="/resources/imagens/add_64.png"/>
+                                            </p:commandLink>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p:dataTable style="width: 80%;" var="actor" value="#{actorBean.listActorsByActivity}" 
+                                         emptyMessage="Nenhum ator encontrado" > 
+
+                                <f:facet name="header">  
+                                    <h:outputText value="Atores envolvidos"/>
+                                </f:facet> 
+
+                                <p:column headerText="Título">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/#{actor.type}_64.png"/>
+                                    <h:outputText value="#{actor.title}" />  
+                                </p:column>  
+
+                                <p:column style="width: 10%;" headerText="Remover">
+                                    <h:commandButton title="Remover Ator" image="/resources/imagens/delete_64.png"
+                                                     action="#{phaseBean.isCompleteProcess}"
+                                                     actionListener="#{activityBean.prepareRemoveActor}">
+                                        <f:param value="#{actor.id}" name="id" />
+                                    </h:commandButton>
+                                </p:column>
+
+                                <f:facet name="footer">  
+                                    <p:column style="text-align: right">  
+                                        <br/> 
+                                    </p:column>  
+                                </f:facet>
+
+                            </p:dataTable>
+
+                        </p:tab> 
+
+                        <p:tab title="Recursos">
+
+                            <table border="0" style="width: 80%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: right">
+                                            <p:commandLink title="Adicionar Recurso"
+                                                           onclick="dlgAddResource.show();"
+                                                           actionListener="#{resourceBean.prepareRegisterResource}">
+                                                <p:graphicImage style="border-style: hidden !important;"
+                                                                value="/resources/imagens/add_64.png"/>
+                                            </p:commandLink>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p:dataTable style="width: 80%;" var="res" value="#{resourceBean.listResourcesByActivity}" 
+                                         emptyMessage="Nenhum recurso encontrado" > 
+
+                                <f:facet name="header">  
+                                    <h:outputText value="Recursos necessários"/>
+                                </f:facet> 
+
+                                <p:column headerText="Título">
+                                    <p:graphicImage style="border-style: hidden !important;"
+                                                    value="/resources/imagens/#{res.type}_64.png"/>
+                                    <h:outputText value="#{res.title}" />  
+                                </p:column>  
+
+                                <p:column style="width: 10%;" headerText="Remover">
+                                    <h:commandButton title="Remover Recurso" image="/resources/imagens/delete_64.png"
+                                                     action="#{phaseBean.isCompleteProcess}"
+                                                     actionListener="#{activityBean.prepareRemoveResource}">
+                                        <f:param value="#{res.id}" name="id" />
+                                    </h:commandButton>
+                                </p:column>
+
+                                <f:facet name="footer">  
+                                    <p:column style="text-align: right">  
+                                        <br/> 
+                                    </p:column>  
+                                </f:facet>
+
+                            </p:dataTable>
+
+                        </p:tab>  
+
+                        <p:tab title="Término">
+
+                            <p:selectOneRadio id="customRadio" value="#{activityBean.activity.completeActivity}" layout="custom">
+                                <f:selectItem itemLabel="Option 1" itemValue="1" />
+                                <f:selectItem itemLabel="Option 2" itemValue="2" />
+                            </p:selectOneRadio>
+
+                            <h:panelGrid cellpadding="10" columns="3">
+                                <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>
+                                <h:outputLabel for="opt1" value="Escolha do Usuário" />
+                                <h:inputHidden />
+
+                                <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
+                                <h:outputLabel for="opt2" value="Limite de Tempo" />
+                                <p:calendar id="datetime" value="#{activityBean.activity.date}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                            </h:panelGrid>
+
+                        </p:tab>  
+
+                    </p:tabView> 
+
+                    <br/>
+
+                    <table border="0" style="width: 80%;">
+
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right">
+                                    <h:commandButton title="Voltar" image="/resources/imagens/cancel_64.png"
+                                                     immediate="true" action="edit-process-activities?faces-redirect=true"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </center>
+            </p:panel>
+
+        </h:form>
+<h:form rendered="#{userBean.learner}">
+            <script type="text/javascript">
+                location.href = "edit-teams.xhtml";
+            </script>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="sidebar">
+        <div class="art-layout-cell art-sidebar1 clearfix">
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p>
+                        Olá #{userBean.user.name}!
+                    </p>
+                    <br/>
+                    <p>
+                        Descrever/Editar atividade.
+                    </p>
+                    <br/>
+                </div>
+            </div>
+
+            <div class="art-block clearfix">
+                <div class="art-blockcontent">
+                    <p><b>Contato: </b>Juvenal<br/><a href="juvenalneto@unemat.br"><span style="font-weight: bold;">juvenalneto@unemat.br</span></a></p></div>
+            </div>              
+
+        </div>
+
+        <!--dlg add Actor-->
+        <p:dialog widgetVar="dlgAddActor" resizable="false" header="Adicionar Ator" 
+                  width="550" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+                        <h:outputText style="font-weight: bold" value="Ator: "/>
+                        <p:selectOneMenu  style="width: 100%;" value="#{activityBean.addActor}">  
+                            <f:selectItem itemLabel="Selecione um ator" itemValue="" />  
+                            <f:selectItems value="#{activityBean.actors}" />
+                        </p:selectOneMenu> 
+
+                        <h:inputHidden/>
+                        <p:commandButton ajax="false" value="Salvar" 
+                                         action="#{activityBean.addNewActor}"
+                                         oncomplete="dlgAddActor.hide();"/>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:dialog>
+
+        <!--dlg add resource-->
+        <p:dialog widgetVar="dlgAddResource" resizable="false" header="Adicionar Recurso" 
+                  width="550" modal="true" appendToBody="true">
+            <h:form prependId="false">
+
+                <center>
+
+                    <h:panelGrid style="margin-bottom:10px; width: 100%;" columns="2">
+                        <h:outputText style="font-weight: bold" value="Tipo: *"/>
+                        <p:selectOneMenu  style="width: 100%;" value="#{activityBean.addResource}" 
+                                          required="true" requiredMessage="É necesssário selecionar o tipo do recurso">  
+                            <f:selectItem itemLabel="Selecione um recurso" itemValue="" />  
+                            <f:selectItems value="#{activityBean.resources}" />
+                        </p:selectOneMenu> 
+
+                        <h:inputHidden/>
+                        <p:commandButton ajax="false" value="Salvar" 
+                                         action="#{activityBean.addNewResource}"
+                                         oncomplete="dlgAddResource.hide();"/>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!-- Created by Artisteer v4.1.0.59782 -->
+    <f:view>
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+            <!--Título da página-->
+
+            <title>WebQuest - <ui:insert name="title">Title</ui:insert></title>
+
+            <!--Fim Título da Página-->
+
+            <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width"/>
+
+            <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+            <link type="text/css" rel="stylesheet" href="/editor/faces/templates/Cinza/styleCinza.css" media="screen"/>
+            <!--[if lte IE 7]><link rel="stylesheet" href="style.ie7.css" media="screen" /><![endif]-->
+            <link rel="stylesheet" type="text/css" href="/editor/faces/templates/Cinza/styleCinza.responsive.css" media="all"/>
+
+            <script src="jqueryCinza.js"></script>
+            <script src="scriptCinza.js"></script>
+            <script src="scriptCinza.responsive.js">
+
+            </script>
+
+            <style>
+                .art-content .art-postcontent-0 .layout-item-0 { padding-right: 10px;padding-left: 10px;  }
+                .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
+                .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
+
+            </style>
+        </h:head>
+        <h:body>
+            <div id="art-main">
+                <div class="art-sheet clearfix">
+                    <header class="art-header clearfix">
+
+
+                        <div class="art-shapes">
+
+                        </div>
+                        <h1 class="art-headline" data-left="10%">
+                            <a href="webquest-manager.xhtml">
+
+                                <!--Título da WebQuest-->
+
+                                <ui:insert name="name">Título da WebQuest</ui:insert>
+
+                                <!--Fim Título da WebQuest-->
+
+                            </a>
+                        </h1>
+
+
+
+
+
+
+                    </header>
+                    <nav class="art-nav clearfix">
+                        <ul class="art-hmenu"> 
+                            <!--Menu-->
+
+                            <ui:insert name="menu">Menu</ui:insert>
+
+                            <!--Fim Menu-->
+                        </ul> 
+                    </nav>
+                    <div class="art-layout-wrapper clearfix">
+                        <div class="art-content-layout">
+                            <div class="art-content-layout-row">
+                                <div class="art-layout-cell art-content clearfix"><article class="art-post art-article">
+                                        <div class="art-postmetadataheader">
+                                            <h2 class="art-postheader"><span class="art-postheadericon">
+                                                    <!--Nome da sessão-->
+
+                                                    <ui:insert name="title">Nome da sessão</ui:insert>
+
+                                                    <!--Fim Nome da sessão-->
+                                                </span></h2>
+
+                                        </div>
+                                        <div class="art-postcontent art-postcontent-0 clearfix"><div class="art-content-layout">
+                                                <div class="art-content-layout-row">
+                                                    <div class="art-layout-cell layout-item-0" style="width: 100%" >
+                                                        <!--Conteúdo da WebQuest-->
+
+                                                        <ui:insert name="content">Conteúdo</ui:insert>
+
+                                                        <!--Fim Conteúdo da WebQuest-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </article></div>
+                            </div>
+                        </div>
+                    </div><footer class="art-footer clearfix">
+                        <p>WebQuest Gerada com o <a href="http://www.webquest-ld.com.br/editor/faces/webquest-manager.xhtml">SIGA</a></p>
+                    </footer>
+
+                </div>
+                <p class="art-page-footer">
+                    <span id="art-footnote-links"><a href="http://www.ieav.cta.br/" target="_blank">IEAv</a></span>
+                    <span id="art-footnote-links"><a href="http://www.ita.br/" target="_blank">ITA</a></span>
+                </p>
+            </div>
+
+
+        </h:body>
+    </f:view>
+</html>
